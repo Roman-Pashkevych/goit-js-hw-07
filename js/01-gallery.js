@@ -5,14 +5,16 @@ console.log(galleryItems);
 
 const galleryContainer = document.querySelector('.gallery');
 const galleryMarkup = createGalleryMarkup(galleryItems);
-galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
+galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
+galleryContainer.addEventListener('click', onGalleryContainerClick);
 
 function createGalleryMarkup(galleryItems) {
-    return galleryItems.map(({ preview, original, description }) => {
-        return `
+    return galleryItems
+        .map(({ preview, original, description }) => {
+            return `
             <div class="gallery__item">
-            <a class="gallery__link" href="${original}">
+            <a class="gallery__link" href="${original}" onclick="event.preventDefault()">
                 <img
                 class="gallery__image"
                 src="${preview}"
@@ -21,5 +23,14 @@ function createGalleryMarkup(galleryItems) {
                 />
             </a>
             </div>`;
-    }).join('');
+        })
+        .join('');
+}
+
+function onGalleryContainerClick(event) {
+    const isGalleryImage = event.target.classList.contains('gallery__image');
+    if (!isGalleryImage) {
+        return;
+    }
+    console.log(event.target.dataset.source);
 }
