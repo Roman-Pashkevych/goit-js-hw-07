@@ -33,4 +33,12 @@ function onGalleryContainerClick(event) {
         return;
     }
     console.log(event.target.dataset.source);
+
+    let srcLink = event.target.getAttribute("data-source");
+    const instance = basicLightbox.create(
+        `<img src="${srcLink}" width="800" height="600">`
+    );
+    instance.show();
 }
+
+    
